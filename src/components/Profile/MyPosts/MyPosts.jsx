@@ -2,14 +2,13 @@ import s from './MyPosts.module.css'
 import Post from './Post/Post';
 import React from 'react';
 
-
 const MyPosts = (props) => {
 
     let postsElements = props.posts.map(post => <Post message={post.message} likesCounter={post.likesCounter}/>)
     let newPostElement = React.createRef();
 
     let onPostChange = (e) => {
-        props.onPostChange(e.target.value)
+        props.updateNewPostText(e.target.value)
     }
 
     let addPost = () => {

@@ -2,15 +2,16 @@ import React from 'react'
 import Users from "./Users";
 import {connect} from "react-redux";
 import {
-    followAC,
-    setUsersAC,
-    unfollowAC,
-    setTotalAC,
-    setCurrentPageAC,
-    showPreloaderAC
+    follow,
+    setUsers,
+    unfollow,
+    setTotal,
+    setCurrentPage,
+    showPreloader
 } from "../../redux/users-reducer";
 import * as axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
+import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 
 class UsersComponent extends React.Component {
 
@@ -50,7 +51,6 @@ class UsersComponent extends React.Component {
     }
 }
 
-
 const mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
@@ -61,27 +61,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        follow: (userId) => {
-            dispatch(followAC(userId))
-        },
-        unfollow: (userId) => {
-            dispatch(unfollowAC(userId))
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users))
-        },
-        setTotal: (totalCount) => {
-            dispatch(setTotalAC(totalCount))
-        },
-        setCurrentPage: (p) => {
-            dispatch(setCurrentPageAC(p))
-        },
-        showPreloader: (preloaderToggle) => {
-            dispatch(showPreloaderAC(preloaderToggle))
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(UsersComponent)
+export default connect(mapStateToProps, {follow, unfollow, setUsers, setTotal, setCurrentPage, showPreloader})(UsersComponent)
