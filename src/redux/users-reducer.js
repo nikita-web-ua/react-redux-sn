@@ -3,13 +3,14 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_TOTAL = 'SET_TOTAL'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-
+const SHOW_PRELOADER = 'SHOW_PRELOADER'
 
 let initialState = {
     users: [ ],
     currentPage: 1,
     pageSize : 5,
-    totalCount: 0
+    totalCount: 0,
+    isFetching: false
 }
 
 const usersReducer = (state = initialState, action) => {
@@ -49,8 +50,11 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 currentPage: action.currentPage
             }
-
-
+        case SHOW_PRELOADER:
+            return {
+                ...state,
+                isFetching: action.preloaderToggle
+            }
         default:
             return state
     }
@@ -61,6 +65,6 @@ export const unfollowAC = (userId) => ({type: UNFOLLOW, userId})
 export const setUsersAC = (users) => ({type: SET_USERS, users})
 export const setTotalAC = (totalCount) => ({type: SET_TOTAL, totalCount})
 export const setCurrentPageAC = (p) => ({type: SET_CURRENT_PAGE, currentPage: p})
-
+export const showPreloaderAC = (preloaderToggle) => ({type: SHOW_PRELOADER, preloaderToggle})
 
 export default usersReducer
