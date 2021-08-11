@@ -1,0 +1,13 @@
+  .item{
+    color:tomato;
+  }
+
+.item img{
+  height: 30px;
+  width: 30px;
+}
+
+.item .like{
+  color:blue;
+}
+  
