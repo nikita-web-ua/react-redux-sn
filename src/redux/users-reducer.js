@@ -42,18 +42,15 @@ const usersReducer = (state = initialState, action) => {
             }
         case SET_TOTAL:
             return {
-                ...state,
-                totalCount: action.totalCount
+                ...state, totalCount: action.totalCount
             }
         case SET_CURRENT_PAGE:
             return {
-                ...state,
-                currentPage: action.currentPage
+                ...state, currentPage: action.currentPage
             }
         case SHOW_PRELOADER:
             return {
-                ...state,
-                isFetching: action.preloaderToggle
+                ...state, isFetching: action.preloaderToggle
             }
         default:
             return state

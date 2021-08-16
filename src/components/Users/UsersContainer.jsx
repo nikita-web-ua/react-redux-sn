@@ -11,7 +11,6 @@ import {
 } from "../../redux/users-reducer";
 import * as axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
-import mapDispatchToProps from "react-redux/lib/connect/mapDispatchToProps";
 
 class UsersComponent extends React.Component {
 
@@ -21,7 +20,7 @@ class UsersComponent extends React.Component {
 
     componentDidMount() {
         this.props.showPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
             this.props.showPreloader(false)
             this.props.setUsers(response.data.items)
             this.props.setTotal(response.data.totalCount)
@@ -32,7 +31,7 @@ class UsersComponent extends React.Component {
 
         this.props.setCurrentPage(p)
         this.props.showPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
             this.props.showPreloader(false)
             this.props.setUsers(response.data.items)
             this.props.setTotal(response.data.totalCount)
