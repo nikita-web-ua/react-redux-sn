@@ -9,8 +9,9 @@ import {
     setCurrentPage,
     showPreloader
 } from "../../redux/users-reducer";
-import * as axios from "axios";
 import Preloader from "../common/Preloader/Preloader";
+import {usersAPI} from "../../api/api";
+
 
 class UsersComponent extends React.Component {
 
@@ -20,10 +21,10 @@ class UsersComponent extends React.Component {
 
     componentDidMount() {
         this.props.showPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
             this.props.showPreloader(false)
-            this.props.setUsers(response.data.items)
-            this.props.setTotal(response.data.totalCount)
+            this.props.setUsers(data.items)
+            this.props.setTotal(data.totalCount)
         })
     }
 
@@ -31,10 +32,10 @@ class UsersComponent extends React.Component {
 
         this.props.setCurrentPage(p)
         this.props.showPreloader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${p}&count=${this.props.pageSize}`, {withCredentials: true}).then(response => {
+        usersAPI.getUsers(p, this.props.pageSize).then(data => {
             this.props.showPreloader(false)
-            this.props.setUsers(response.data.items)
-            this.props.setTotal(response.data.totalCount)
+            this.props.setUsers(data.items)
+            this.props.setTotal(data.totalCount)
         })
 
     }
