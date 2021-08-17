@@ -1,3 +1,5 @@
+import {usersAPI} from "../api/api";
+
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -67,12 +69,50 @@ const usersReducer = (state = initialState, action) => {
     }
 }
 
-export const follow = (userId) => ({type:FOLLOW, userId})
-export const unfollow = (userId) => ({type: UNFOLLOW, userId})
+export const followSuccess = (userId) => ({type:FOLLOW, userId})
+export const unfollowSuccess = (userId) => ({type: UNFOLLOW, userId})
 export const setUsers = (users) => ({type: SET_USERS, users})
 export const setTotal = (totalCount) => ({type: SET_TOTAL, totalCount})
 export const setCurrentPage = (p) => ({type: SET_CURRENT_PAGE, currentPage: p})
 export const showPreloader = (preloaderToggle) => ({type: SHOW_PRELOADER, preloaderToggle})
 export const toggleFollowingInProgress = (isFetching, userId) => ({type: TOGGLE_FOLLOWING_IN_PROGRESS, isFetching, userId})
 
+
+export const getUsers = (currentPage, pageSize) => {
+
+    return (dispatch) => {
+        dispatch(showPreloader(true))
+        usersAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(showPreloader(false))
+            dispatch(setUsers(data.items))
+            dispatch(setTotal(data.totalCount))
+        })
+    }
+}
+
+export const unfollow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.unfollow(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(unfollowSuccess(userId))
+            }
+            dispatch(toggleFollowingInProgress(false, userId))
+        })
+
+    }
+}
+
+export const follow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleFollowingInProgress(true, userId))
+        usersAPI.follow(userId).then((data) => {
+            if (data.resultCode === 0) {
+                dispatch(followSuccess(userId))
+            }
+            dispatch(toggleFollowingInProgress(false, userId))
+        })
+
+    }
+}
 export default usersReducer
