@@ -1,3 +1,6 @@
+import axios from "axios";
+import {usersAPI} from "../api/api";
+
 const ADD_POST = 'ADD-POST';
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const SET_PROFILE_DATA = 'SET_PROFILE_DATA'
@@ -52,4 +55,16 @@ export const updateNewPostText = (text) => {
     }
 }
 export const setProfileData = (profileData) => ({type: SET_PROFILE_DATA, profileData})
+
+export const getProfileData = (userId) => {
+    return (dispatch) => {
+        usersAPI.getProfileData(userId)
+            .then((response) => {
+                dispatch(setProfileData(response.data))
+            })
+    }
+}
+
+
+
 export default profileReducer;

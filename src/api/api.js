@@ -28,4 +28,13 @@ export const usersAPI = {
                 return response.data
             })
     },
+    getProfileData: (userId) => {
+        return instance.get(`profile/${userId}`)
+    }
+}
+
+export const authAPI = {
+    authMe: () => {
+        return instance.get(`auth/me`)
+    }
 }
