@@ -12,13 +12,11 @@ let initialState = {
 const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_USER_DATA:
-
             return {
                 ...state,
                 ...action.data,
                 isAuth: true
             }
-
         default:
             return state;
     }
@@ -26,12 +24,12 @@ const authReducer = (state = initialState, action) => {
 
 const setAuthUserData = (userId, email, login) => ({type: SET_USER_DATA, data: {userId, email, login}})
 
-export const authMe = () => () => {
+export const authMe = () => (dispatch) => {
     return authAPI.authMe()
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, login, email} = response.data.data
-                setAuthUserData(id, email, login)
+                dispatch(setAuthUserData(id, email, login))
             }
         })
 }

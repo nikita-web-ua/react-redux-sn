@@ -3,7 +3,6 @@ import Dialog from "./Dialog/Dialog";
 import Message from "./Message/Message";
 import React from 'react';
 
-
 const Dialogs = (props) => {
 
     let dialogsElements = props.dialogsPage.dialogs.map((el) => {
