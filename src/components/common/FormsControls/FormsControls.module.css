@@ -8,3 +8,7 @@
 {
     color: darkred;
 }
+
+.formSummaryError {
+    color: red;
+}
