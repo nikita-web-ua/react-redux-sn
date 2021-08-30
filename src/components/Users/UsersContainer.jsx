@@ -10,6 +10,13 @@ import {
 import Preloader from "../common/Preloader/Preloader";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
+import {
+    getCurrentPage, getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsersList
+} from "../../redux/users-selectors";
 
 
 class UsersComponent extends React.Component {
@@ -25,7 +32,6 @@ class UsersComponent extends React.Component {
     changePage = (p) => {
         this.props.setCurrentPage(p)
         this.props.getUsers(p, this.props.pageSize)
-
     }
 
     render() {
@@ -41,12 +47,12 @@ class UsersComponent extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        totalCount: state.usersPage.totalCount,
-        pageSize: state.usersPage.pageSize,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsersList(state),
+        totalCount: getTotalUsersCount(state),
+        pageSize: getPageSize(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 
