@@ -3,19 +3,3 @@
     height: 100px;
 }
 
-.pagination{
-    font-size: 20px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-}
-
-.pagination span{
-    margin-right: 5px;
-    font-weight: lighter;
-    cursor: pointer;
-}
-
-.pagination .active{
-    font-weight: bold;
-}

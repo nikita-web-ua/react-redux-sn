@@ -1,4 +1,4 @@
-import {profileAPI, usersAPI} from "../api/api";
+ import {profileAPI, usersAPI} from "../api/api";
 
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE_DATA = 'SET_PROFILE_DATA'
@@ -51,31 +51,25 @@ export const setProfileData = (profileData) => ({type: SET_PROFILE_DATA, profile
 const setProfileStatus = (status) => ({type: SET_PROFILE_STATUS, status})
 
 export const getProfileData = (userId) => {
-    return (dispatch) => {
-        usersAPI.getProfileData(userId)
-            .then((response) => {
+    return async (dispatch) => {
+        let response = await usersAPI.getProfileData(userId)
                 dispatch(setProfileData(response.data))
-            })
     }
 }
 
 export const getProfileStatus = (userId) => {
-    return (dispatch) => {
-        profileAPI.getProfileStatus(userId)
-            .then((response) => {
+    return async (dispatch) => {
+        let response = await profileAPI.getProfileStatus(userId)
                 dispatch(setProfileStatus(response.data))
-            })
     }
 }
 
 export const updateProfileStatus = (status) => {
-    return (dispatch) => {
-        profileAPI.updateProfileStatus(status)
-            .then((response) => {
+    return async  (dispatch) => {
+        let response = await profileAPI.updateProfileStatus(status)
                 if(response.data.resultCode === 0){
                     dispatch(setProfileStatus(status))
                 }
-            })
     }
 }
 
