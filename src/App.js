@@ -1,6 +1,6 @@
 import './App.css'
 import Navbar from './components/Navbar/Navbar'
-import {BrowserRouter, Route} from "react-router-dom"
+import {BrowserRouter, HashRouter, Route} from "react-router-dom"
 import Settings from "./components/Settings/Settings"
 import Music from "./components/Music/Music"
 import News from "./components/News/News"
@@ -65,11 +65,11 @@ let ContainerApp = connect(mapStateToProps, {initializeApp})(App)
 let MainApp = () => {
     return (
         <React.StrictMode>
-            <BrowserRouter>
+            <HashRouter>
                 <Provider store={store}>
                     <ContainerApp/>
                 </Provider>
-            </BrowserRouter>
+            </HashRouter>
         </React.StrictMode>
     )
 }
