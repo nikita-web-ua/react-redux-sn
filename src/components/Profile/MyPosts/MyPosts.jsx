@@ -24,7 +24,7 @@ const NewPostReduxForm = reduxForm({ form: 'newPost'})(NewPost)
 
 const MyPosts = (props) => {
 
-    let postsElements = props.posts.map(post => <Post message={post.message} likesCounter={post.likesCounter}/>)
+    let postsElements = props.posts.map(post => <Post key={post.id} message={post.message} likesCounter={post.likesCounter}/>)
 
     let onSubmitNewPost = (formData) => {
         props.addPost(formData.newPost)

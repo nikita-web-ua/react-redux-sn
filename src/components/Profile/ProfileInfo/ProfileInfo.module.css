@@ -1,10 +1,12 @@
 .descriptionBlock{
     padding: 10px;
 }
-
 .profileData {
 
 }
 .profileData img{
     width: 200px;
+}
+.socialNetContact{
+    padding-left: 20px;
 }

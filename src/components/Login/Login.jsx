@@ -19,7 +19,6 @@ const LoginForm = ({handleSubmit, error}) => {
             {
                 error &&  <div className={s.formSummaryError}> {error}</div>
             }
-
             <div>
                 <button>Login</button>
             </div>
