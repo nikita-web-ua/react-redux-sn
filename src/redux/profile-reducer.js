@@ -73,14 +73,18 @@ export const getProfileStatus = (userId) => {
     }
 }
 
-export const updateProfileStatus = (status) => {
-    return async  (dispatch) => {
-        let response = await profileAPI.updateProfileStatus(status)
-                if(response.data.resultCode === 0){
-                    dispatch(setProfileStatus(status))
-                }
-    }
-}
+ export const updateProfileStatus = (status) => async (dispatch) => {
+     try {
+         let response = await profileAPI.updateProfileStatus(status)
+         if (response.data.resultCode === 0) {
+             dispatch(setProfileStatus(status))
+         }
+     } catch (error) {
+        alert('some error accured')
+         console.error(error)
+     }
+ }
+
  export const uploadPhoto = (file) => {
      return async  (dispatch) => {
          let response = await profileAPI.savePhoto(file)
