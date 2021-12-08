@@ -1,23 +1,39 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Paginator from "../common/Paginator/Paginator";
-import User from "./User";
-import {UserType} from "../../types/types";
-import {FilterType} from "../../redux/users-reducer";
+import {User} from "./User";
+import {actions, FilterType, getUsers} from "../../redux/users-reducer";
 import UsersSearchForm from "./UsersSearchForm";
+import {useDispatch, useSelector} from "react-redux";
+import {
+    getCurrentPage,
+    getPageSize,
+    getFilter,
+    getTotalUsersCount,
+    getUsersSuperSelector,
+} from "../../redux/users-selectors";
 
-type propsType = {
-    currentPage: number,
-    changePage: (page: number) => void,
-    pageSize: number,
-    totalCount: number,
-    users: Array<UserType>,
-    followingInProgress: Array<number>,
-    follow: (userId: number) => void,
-    unfollow: (userId: number) => void,
-    onFilterChanged: (filter: FilterType) => void,
-}
+type PropsType = {}
 
-let Users: React.FC<propsType> = ({currentPage, changePage, pageSize, totalCount, users, followingInProgress, follow, unfollow, onFilterChanged}) => {
+let Users: React.FC<PropsType> = (props) => {
+
+    const dispatch = useDispatch()
+    const currentPage = useSelector(getCurrentPage)
+    const pageSize = useSelector(getPageSize)
+    const filter = useSelector(getFilter)
+    const totalCount = useSelector(getTotalUsersCount)
+    let users = useSelector(getUsersSuperSelector)
+    const changePage = (p: number) => {
+        dispatch(getUsers(p, pageSize, filter))
+    }
+
+    useEffect( () => {
+        dispatch(getUsers(currentPage, pageSize, filter))
+    }, [])
+
+    const onFilterChanged = (filter: FilterType) => {
+        dispatch(actions.setFilter(filter))
+        dispatch(getUsers(1, pageSize, filter))
+    }
 
     return (
         <div>
@@ -26,10 +42,7 @@ let Users: React.FC<propsType> = ({currentPage, changePage, pageSize, totalCount
                        pageSize={pageSize} totalItemsCount={totalCount}/>
             <div>
                 {
-                    users.map((u) => <User user={u}
-                                                 followingInProgress={followingInProgress}
-                                                 follow={follow}
-                                                 unfollow={unfollow}/>)
+                    users.map((u) => <User user={u}/>)
                 }
             </div>
         </div>

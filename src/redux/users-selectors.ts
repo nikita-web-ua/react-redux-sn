@@ -13,7 +13,7 @@ export const getPageSize = (state: AppStateType) => {
     return state.usersPage.pageSize
 }
 
-export const getTerm = (state: AppStateType) => {
+export const getFilter = (state: AppStateType) => {
     return state.usersPage.filter
 }
 

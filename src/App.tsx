@@ -4,10 +4,10 @@ import {BrowserRouter, HashRouter, Redirect, Route, Switch} from "react-router-d
 import Settings from "./components/Settings/Settings"
 import Music from "./components/Music/Music"
 import News from "./components/News/News"
-import UsersContainer from "./components/Users/UsersContainer"
+import {UsersPage} from "./components/Users/UsersContainer"
 import ProfileContainer from "./components/Profile/ProfileContainer"
 import HeaderContainer from "./components/Header/HeaderContainer"
-import Login from "./components/Login/Login"
+import {LoginPage} from "./components/Login/LoginPage"
 import React, {Component, Suspense} from "react"
 import {connect, Provider} from "react-redux"
 import {initializeApp} from "./redux/app-reducer"
@@ -57,11 +57,11 @@ class App extends Component<MapStateTpPropsType & MapDispatchToPropsType> {
                                }
                                }/>
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersPage/>}/>
                         <Route path='/news' component={News}/>
                         <Route path='/music' component={Music}/>
                         <Route path='/settings' component={Settings}/>
-                        <Route path='/login' component={Login}/>
+                        <Route path='/login' component={LoginPage}/>
                         <Route path='*' render={() => <div>404 Page Not Found</div>}/>
                     </Switch>
                 </div>

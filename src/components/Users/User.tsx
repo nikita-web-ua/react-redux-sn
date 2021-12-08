@@ -3,15 +3,19 @@ import styles from './users.module.css'
 import avatarka from '../../assets/images/avatarka.jpg'
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../types/types";
+import {useDispatch, useSelector} from "react-redux";
+import {getFollowingInProgress} from "../../redux/users-selectors";
+import {follow, unfollow} from "../../redux/users-reducer";
 
 type UserPropsType = {
     user: UserType,
-    followingInProgress: Array<number>,
-    follow: (userId: number) => void,
-    unfollow: (userId: number) => void
 }
 
-let User: React.FC<UserPropsType> = ({user, followingInProgress, follow, unfollow}) => {
+export const User: React.FC<UserPropsType> = ({user}) => {
+
+    const dispatch = useDispatch()
+    const followingInProgress = useSelector(getFollowingInProgress)
+
     return (
         <div>
                     <span>
@@ -25,11 +29,11 @@ let User: React.FC<UserPropsType> = ({user, followingInProgress, follow, unfollo
                             {user.followed
                                 ?
                                 <button disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
-                                    unfollow(user.id)
+                                    dispatch(unfollow(user.id))
                                 }}>Unfollow</button>
                                 :
                                 <button disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
-                                    follow(user.id)
+                                    dispatch(follow(user.id))
                                 }}>Follow</button>}
                         </div>
                     </span>
@@ -46,5 +50,3 @@ let User: React.FC<UserPropsType> = ({user, followingInProgress, follow, unfollo
 
         </div>);
 };
-
-export default User
