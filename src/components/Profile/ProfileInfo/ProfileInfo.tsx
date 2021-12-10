@@ -24,7 +24,6 @@ const ProfileInfo: React.FC<PropsType> = ({profileData, status, updateProfileSta
     }
 
     const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
-        debugger
         if (e.target.files?.length) {
             uploadPhoto(e.target.files[0])
         }

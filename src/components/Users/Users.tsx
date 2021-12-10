@@ -11,27 +11,67 @@ import {
     getTotalUsersCount,
     getUsersSuperSelector,
 } from "../../redux/users-selectors";
+import {useHistory} from "react-router-dom";
+import * as queryString from "querystring";
 
 type PropsType = {}
+type QueryParamsType = {page: string, term?: string, friend?: string}
 
 let Users: React.FC<PropsType> = (props) => {
 
     const dispatch = useDispatch()
+    const history = useHistory()
+
     const currentPage = useSelector(getCurrentPage)
     const pageSize = useSelector(getPageSize)
     const filter = useSelector(getFilter)
     const totalCount = useSelector(getTotalUsersCount)
-    let users = useSelector(getUsersSuperSelector)
+    const users = useSelector(getUsersSuperSelector)
+
+    useEffect( () => {
+        const parsed = queryString.parse(history.location.search.substring(1)) as QueryParamsType
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (!!parsed.page) actualPage = Number(parsed.page)
+        if (!!parsed.term) actualFilter = {...filter, term: parsed.term as string}
+
+        switch (parsed.friend){
+            case 'null': {
+                actualFilter = {...actualFilter, friend: null}
+                break
+            }
+            case 'true': {
+                actualFilter = {...actualFilter, friend: true}
+                break
+            }
+            case 'false': {
+                actualFilter = {...actualFilter, friend: false}
+                break
+            }
+        }
+
+        dispatch(getUsers(actualPage, pageSize, actualFilter))
+    }, [])
+
+    useEffect (()=>{
+        let query:QueryParamsType = {page: '1'}
+
+        query.page = String(currentPage)
+        if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
+
     const changePage = (p: number) => {
         dispatch(getUsers(p, pageSize, filter))
     }
-
-    useEffect( () => {
-        dispatch(getUsers(currentPage, pageSize, filter))
-    }, [])
-
     const onFilterChanged = (filter: FilterType) => {
-        dispatch(actions.setFilter(filter))
         dispatch(getUsers(1, pageSize, filter))
     }
 
