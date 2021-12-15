@@ -5,6 +5,7 @@ import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import {ChangeEvent, useState} from "react";
 import ProfileDataForm from "./ProfileDataForm";
 import {ContactsType, ProfileDataType} from "../../../types/types";
+import {Image} from "antd";
 
 type PropsType = {
     profileData: ProfileDataType | null,
@@ -40,7 +41,8 @@ const ProfileInfo: React.FC<PropsType> = ({profileData, status, updateProfileSta
         <div>
             <div className={s.descriptionBlock}>
                 <div className={s.profileData}>
-                    <img src={profileData.photos.large || avatarka} alt="user avatar" className={s.mainPhoto}/> <br/>
+                    <Image src={profileData.photos.large || avatarka} />
+                    {/*<img src={profileData.photos.large || avatarka} alt="user avatar" className={s.mainPhoto}/> <br/>*/}
                     {isOwner && <input type={'file'} onChange={onMainPhotoSelected}/>}
                     <h3>{profileData.fullName}</h3>
                     <ProfileStatusWithHooks status={status} updateProfileStatus={updateProfileStatus}/>

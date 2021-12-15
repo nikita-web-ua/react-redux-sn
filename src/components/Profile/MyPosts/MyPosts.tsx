@@ -21,7 +21,6 @@ const MyPosts: React.FC<MapPropsType & DispatchPropsType> = (props) => {
     }
     return (
         <div className={s.postsBlock}>
-            <h3>My Posts</h3>
             <PostReduxForm onSubmit={onSubmitNewPost}/>
             <div className={s.posts}>
                 {postsElements}

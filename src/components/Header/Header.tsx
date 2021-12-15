@@ -1,25 +1,32 @@
-import s from './Header.module.css'
-import {NavLink} from "react-router-dom";
+import {Link} from "react-router-dom"
+import React from "react"
+import {Button, Col, Layout, Row} from "antd"
+import {useDispatch, useSelector} from "react-redux"
+import {logout} from "../../redux/auth-reducer"
+import {selectIsAuth, selectLogin} from "../../redux/auth-selectors"
 
-export type MapPropsType = {
-    isAuth: boolean,
-    login: string | null
-}
+const Header: React.FC = (props) => {
 
-export type DispatchPropsType = {
-    logout: () => void
-}
+    const {Header} = Layout;
+    const dispatch = useDispatch()
 
-const Header: React.FC<MapPropsType & DispatchPropsType> = (props) => {
-    return(
-        <header className={s.header}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png" />
-            <div className={s.loginBlock}>
-                { props.isAuth
-                    ? <div>{props.login} - <button onClick={props.logout}>Log out</button></div>
-                    : <NavLink to={'/login'}>Login</NavLink>}
-            </div>
-        </header>
+    const isAuth = useSelector(selectIsAuth)
+    const login = useSelector(selectLogin)
+
+    const logoutCallBack = () => {
+        dispatch(logout())
+    }
+
+    return (
+        <Header className="site-layout-background" style={{padding: 0}}>
+            <header>
+                <Row >
+                    {isAuth
+                        ? <Col push={20}><Button onClick={logoutCallBack}>Log out</Button></Col>
+                        : <Col offset={20}><Button> <Link to={'/login'}>Login</Link> </Button></Col>}
+                </Row>
+            </header>
+        </Header>
     );
 }
 

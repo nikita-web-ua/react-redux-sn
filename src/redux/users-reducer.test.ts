@@ -14,7 +14,11 @@ beforeEach( () => {
         pageSize: 5,
         totalCount: 0,
         isFetching: false,
-        followingInProgress: []
+        followingInProgress: [],
+        filter: {
+            term: '',
+            friend: null as null | boolean
+        },
     }
 })
 
