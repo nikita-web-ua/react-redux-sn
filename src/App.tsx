@@ -1,7 +1,6 @@
 import './App.css'
 import 'antd/dist/antd.css'
-import Navbar from './components/Navbar/Navbar'
-import {BrowserRouter, HashRouter, Link, Redirect, Route, Switch} from "react-router-dom"
+import {BrowserRouter, Link, Redirect, Route, Switch} from "react-router-dom"
 import Settings from "./components/Settings/Settings"
 import Music from "./components/Music/Music"
 import News from "./components/News/News"
@@ -19,13 +18,16 @@ import {
     FireOutlined,
     SoundOutlined,
     CommentOutlined,
+    MessageOutlined,
     UserOutlined,
     TeamOutlined,
 } from '@ant-design/icons';
 import Header from "./components/Header/Header";
 
 const {Content, Footer, Sider } = Layout;
+
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const GeneralChatPage = React.lazy(() => import("./pages/GeneralChat/GeneralChatPage"))
 
 type MapStateTpPropsType = ReturnType<typeof mapStateToProps>
 type MapDispatchToPropsType = {
@@ -78,19 +80,22 @@ class App extends Component<MapStateTpPropsType & MapDispatchToPropsType> {
                         <Menu.Item key="1" icon={<UserOutlined />}>
                             <Link to='/profile'>My Profile</Link>
                         </Menu.Item>
-                        <Menu.Item key="2" icon={<CommentOutlined />}>
+                        <Menu.Item key="2" icon={<MessageOutlined/>}>
                             <Link to='/dialogs' >Messages</Link>
                         </Menu.Item>
                         <Menu.Item key="3" icon={<TeamOutlined />}>
                             <Link to='/users' >Users</Link>
                         </Menu.Item>
-                        <Menu.Item key="4" icon={<FireOutlined />}>
+                        <Menu.Item key="4" icon={<CommentOutlined />}>
+                            <Link to='/generalChatPage' >General Chat</Link>
+                        </Menu.Item>
+                        <Menu.Item key="5" icon={<FireOutlined />}>
                             <Link to='/news' >News</Link>
                         </Menu.Item>
-                        <Menu.Item key="5" icon={<SoundOutlined />}>
+                        <Menu.Item key="6" icon={<SoundOutlined />}>
                             <Link to='/music' >Music</Link>
                         </Menu.Item>
-                        <Menu.Item key="6" icon={<SettingOutlined />}>
+                        <Menu.Item key="7" icon={<SettingOutlined />}>
                             <Link to='/settings' >Settings</Link>
                         </Menu.Item>
                     </Menu>
@@ -111,6 +116,13 @@ class App extends Component<MapStateTpPropsType & MapDispatchToPropsType> {
                                        }/>
                                 <Route path='/users'
                                        render={() => <UsersPage/>}/>
+                                <Route path='/generalChatPage'
+                                       render={() => {
+                                           return <Suspense fallback={<Preloader/>}>
+                                               <GeneralChatPage/>
+                                           </Suspense>
+                                       }
+                                       }/>
                                 <Route path='/news' component={News}/>
                                 <Route path='/music' component={Music}/>
                                 <Route path='/settings' component={Settings}/>
@@ -118,35 +130,9 @@ class App extends Component<MapStateTpPropsType & MapDispatchToPropsType> {
                                 <Route path='*' render={() => <div>404 Page Not Found</div>}/>
                             </Switch>
                     </Content>
-                    <Footer style={{ textAlign: 'center', backgroundColor:'lightblue' }}>SN ©2021 Created by Nikita Maliarchuk</Footer>
+                    <Footer style={{ textAlign: 'center', backgroundColor:'lightblue', marginTop: 30}}>SN ©2021 Created by Nikita Maliarchuk</Footer>
                 </Layout>
             </Layout>
-
-            // <div className='app-wrapper'>
-            //     <HeaderContainer/>
-            //     <Navbar/>
-            //     <div className='app-wrapper-content'>
-            //         <Switch>
-            //             <Redirect exact from={'/'} to={'/profile'} />
-            //             <Route path='/profile/:userId?'
-            //                    render={() => <ProfileContainer/>}/>
-            //             <Route path='/dialogs'
-            //                    render={() => {
-            //                        return <Suspense fallback={<Preloader/>}>
-            //                            <DialogsContainer/>
-            //                        </Suspense>
-            //                    }
-            //                    }/>
-            //             <Route path='/users'
-            //                    render={() => <UsersPage/>}/>
-            //             <Route path='/news' component={News}/>
-            //             <Route path='/music' component={Music}/>
-            //             <Route path='/settings' component={Settings}/>
-            //             <Route path='/login' component={LoginPage}/>
-            // {/*            <Route path='*' render={() => <div>404 Page Not Found</div>}/>*/}
-            // {/*        </Switch>*/}
-            // {/*    </div>*/}
-            // {/*</div>*/}
         )
     }
 }
