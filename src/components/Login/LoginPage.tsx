@@ -7,20 +7,26 @@ import {Redirect} from "react-router-dom";
 import s from "./../common/FormsControls/FormsControls.module.css"
 import style from "./Login.module.css"
 import {AppStateType} from "../../redux/redux-store";
+import {Button, Col, Row} from "antd";
 
 type LoginFormOwnPropsType = {
     captchaUrl: string | null
 }
 
-const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({handleSubmit, error, captchaUrl}) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPropsType> & LoginFormOwnPropsType> = ({
+                                                                                                                        handleSubmit,
+                                                                                                                        error,
+                                                                                                                        captchaUrl
+                                                                                                                    }) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
                 <Field placeholder={"E-mail"} name={"email"} component={Input} validate={[required]}/></div>
             <div>
-                <Field  type={"password"} placeholder={"Password"} name={"password"} component={Input} validate={[required]}/></div>
+                <Field type={"password"} placeholder={"Password"} name={"password"} component={Input}
+                       validate={[required]}/></div>
             <div>
-                <Field type={"checkbox"} name={"rememberMe"} component={"input"}/> remember me
+                <Field type={"checkbox"} name={"rememberMe"} component={"input"} style={{width: '30px'}}/> remember me
             </div>
             {captchaUrl &&
             <div className={style.captcha}>
@@ -33,10 +39,10 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPro
             </div>
             }
             {
-                error &&  <div className={s.formSummaryError}> {error}</div>
+                error && <div className={s.formSummaryError}> {error}</div>
             }
             <div>
-                <button>Login</button>
+                <Button type={"primary"} htmlType={'submit'}>Login</Button>
             </div>
         </form>
     )
@@ -44,8 +50,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnPro
 
 const LoginReduxForm = reduxForm<LoginFormValuesType, LoginFormOwnPropsType>({form: 'login'})(LoginForm)
 
-type MapStatePropsType = {
-}
+type MapStatePropsType = {}
 
 type LoginFormValuesType = {
     email: string,
@@ -64,14 +69,19 @@ export const LoginPage: React.FC<MapStatePropsType> = (props) => {
         dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
-    if (isAuth){
-        return <Redirect to={'/profile'} />
+    if (isAuth) {
+        return <Redirect to={'/profile'}/>
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit}/>
-        </div>
+        <Row justify={"center"} >
+            <Col lg={6} md={9} sm={12}>
+                <div className={style.loginBlock}>
+                    <h1>Login</h1>
+                    <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit}/>
+                </div>
+            </Col>
+        </Row>
     )
+
 }

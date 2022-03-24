@@ -78,7 +78,6 @@ export const getProfileStatus = (userId: number): ThunkType => {
              dispatch(actions.setProfileStatus(status))
          }
      } catch (error) {
-        alert('some error accured')
          console.error(error)
      }
  }

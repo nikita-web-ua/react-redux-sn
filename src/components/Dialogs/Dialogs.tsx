@@ -6,6 +6,8 @@ import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Textarea} from "../common/FormsControls/FormsControls";
 import {maxLengthCreator, required} from "../../utils/validators/validators";
 import {initialStateType} from "../../redux/dialogs-reducer";
+import {Avatar, Col, List, Row} from "antd";
+import {NavLink} from "react-router-dom";
 
 type PropsType = {
     dialogsPage: initialStateType,
@@ -18,22 +20,38 @@ const Dialogs: React.FC<PropsType> = (props) => {
     let dialogsElements = state.dialogs.map(el => <Dialog name={el.name} id={el.id} img={el.img} key={el.id}/>)
     let messagesElements = state.messages.map(mas => <Message message={mas.message} key={mas.id}/>)
 
+
     let sendNewMessage = (formData: {newMessageText: string}) => {
         props.sendMessage(formData.newMessageText)
     }
 
     return (
-        <div className={s.dialogs}>
-            <div className={s.dialogsItems}>
-                {dialogsElements}
-            </div>
-            <div className={s.messages}>
-                <div>{messagesElements}</div>
-                <div className={s.textInput}>
-                    <SendMessageReduxForm onSubmit={sendNewMessage}/>
-                </div>
-            </div>
-
+        <div>
+            <Row>
+                <Col span={4}>
+                    <List
+                        itemLayout="horizontal"
+                        dataSource={state.dialogs}
+                        renderItem={item => (
+                            <List.Item>
+                                <List.Item.Meta
+                                    avatar={<Avatar src={`https://joeschmoe.io/api/v1/${item.id}`} />}
+                                    title={<NavLink to={"/dialogs/" + item.id}>{item.name}</NavLink>}
+                                    // description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                />
+                            </List.Item>
+                        )}
+                    />
+                </Col>
+                <Col span={20}>
+                    <div className={s.messages}>
+                        <div>{messagesElements}</div>
+                        <div className={s.textInput}>
+                            <SendMessageReduxForm onSubmit={sendNewMessage}/>
+                        </div>
+                    </div>
+                </Col>
+            </Row>
         </div>
     );
 }
