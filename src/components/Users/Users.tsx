@@ -13,6 +13,7 @@ import {
 } from "../../redux/users-selectors";
 import {useHistory} from "react-router-dom";
 import * as queryString from "querystring";
+import styles from './users.module.css'
 
 type PropsType = {}
 type QueryParamsType = {page: string, term?: string, friend?: string}
@@ -76,15 +77,15 @@ let Users: React.FC<PropsType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={styles.usersContainer}>
             <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            <Paginator currentPage={currentPage} changePage={changePage}
-                       pageSize={pageSize} totalItemsCount={totalCount}/>
-            <div>
+            <div className={styles.usersList}>
                 {
                     users.map((u) => <User user={u}/>)
                 }
             </div>
+            <Paginator currentPage={currentPage} changePage={changePage}
+                       pageSize={pageSize} totalItemsCount={totalCount}/>
         </div>
     );
 }

@@ -7,7 +7,7 @@ import {APIResponseType} from "../api/api";
 let initialState = {
     users: [] as Array<UserType>,
     currentPage: 1,
-    pageSize: 5,
+    pageSize: 16,
     totalCount: 0,
     isFetching: false,
     followingInProgress: [] as Array<number>, // array of users ids

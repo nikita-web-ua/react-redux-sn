@@ -1,11 +1,19 @@
 import React from 'react'
 import styles from './users.module.css'
-import avatarka from '../../assets/images/avatarka.jpg'
 import {NavLink} from "react-router-dom";
 import {UserType} from "../../types/types";
 import {useDispatch, useSelector} from "react-redux";
 import {getFollowingInProgress} from "../../redux/users-selectors";
 import {follow, unfollow} from "../../redux/users-reducer";
+import {Avatar, Button, Typography} from "antd";
+import {UserOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
+
+const { Text } = Typography;
+const btnPos = {
+    marginTop: '-66px',
+    marginLeft: '115px'
+}
+const gap = {margin: '5px'}
 
 type UserPropsType = {
     user: UserType,
@@ -17,35 +25,33 @@ export const User: React.FC<UserPropsType> = ({user}) => {
     const followingInProgress = useSelector(getFollowingInProgress)
 
     return (
-        <div>
+        <div className={styles.user}>
                     <span>
                         <NavLink to={'./profile/' + user.id}>
                             <div>
-                                <img src={user.photos.small != null ? user.photos.small : avatarka}
-                                     className={styles.userPhoto}/>
+                                 <Avatar shape="square" size={150} src={user.photos.small } icon={<UserOutlined />} />
                             </div>
+                            <div style={gap}><Text strong>{user.name}</Text></div>
                         </NavLink>
-                        <div>
+                        <div style={{...gap, ...btnPos}} >
                             {user.followed
                                 ?
-                                <button disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
+                                <Button type="primary" danger shape="circle" icon={<UserDeleteOutlined />} size={'large'} title={'unfollow'}
+                                        disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
                                     dispatch(unfollow(user.id))
-                                }}>Unfollow</button>
+                                }}/>
                                 :
-                                <button disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
+                                <Button type="primary" shape="circle" icon={<UserAddOutlined />} size={'large'} title={'follow'}
+                                        disabled={followingInProgress.some((id) => id === user.id)} onClick={() => {
                                     dispatch(follow(user.id))
-                                }}>Follow</button>}
+                                }}/>}
                         </div>
                     </span>
             <span>
-                <span>
-                            <div>{user.name}</div>
-                            <div>{user.status}</div>
-                </span>
-                <span>
-                            <div>{"u.location.country"}</div>
-                            <div>{"u.location.city"}</div>
-                </span>
+                {/*<span>*/}
+                {/*            <div>{"user.location.country"}</div>*/}
+                {/*            <div>{"u.location.city"}</div>*/}
+                {/*</span>*/}
             </span>
 
         </div>);

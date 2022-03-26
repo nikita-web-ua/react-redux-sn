@@ -1,5 +1,31 @@
-.userPhoto {
-    width: 100px;
-    height: 100px;
+.usersContainer{
+    align-items: center;
+}
+
+.usersList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin: 20px 0 40px 0;
+}
+
+
+.user{
+    margin: 20px 50px;
+    display: inline-block;
+}
+
+.searchForm{
+    display: flex;
+    gap: 10px;
+    margin-left: 50px;
+}
+
+.searchFormInput {
+    width: 200px;
+}
+
+.searchFormSelect{
+    width: 200px;
 }
 

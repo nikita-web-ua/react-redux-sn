@@ -15,7 +15,7 @@ export const UsersContainer: React.FC<PropsType> = (props) => {
     const isFetching = useSelector(getIsFetching)
 
     return <>
-        {isFetching === true ? <Preloader/> : null}
+        {isFetching ? <Preloader/> : null}
         <Users/>
     </>
 

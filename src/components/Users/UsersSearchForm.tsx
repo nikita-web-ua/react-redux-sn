@@ -1,9 +1,10 @@
 import React from "react";
 import {Form, Formik} from "formik";
 import {FilterType} from "../../redux/users-reducer";
-import {Field} from "formik";
 import {getFilter} from "../../redux/users-selectors";
 import {useSelector} from "react-redux";
+import styles from './users.module.css'
+import {Input, Select, SubmitButton} from "formik-antd";
 
 type PropsType = {
     onFilterChanged: (filter: FilterType) => void,
@@ -34,16 +35,16 @@ const UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
             {({
                   isSubmitting
               }) => (
-                <Form>
-                    <Field type={'text'} name={'term'}/>
-                    <Field name={'friend'} as={'select'}>
+                <Form className={styles.searchForm}>
+                    <Input className={styles.searchFormInput} name={'term'} type={'text'} placeholder={'user-name'}/>
+                    <Select name={'friend'}  className={styles.searchFormSelect}>
                         <option value={'null'}>All</option>
                         <option value={'true'}>Only followed</option>
                         <option value={'false'}>Only unfollowed</option>
-                    </Field>
-                    <button type="submit" disabled={isSubmitting}>
+                    </Select>
+                    <SubmitButton disabled={isSubmitting}>
                         Filter
-                    </button>
+                    </SubmitButton>
                 </Form>
             )}
         </Formik>
