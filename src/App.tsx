@@ -102,7 +102,7 @@ class App extends Component<MapStateTpPropsType & MapDispatchToPropsType> {
                 </Sider>
                 <Layout className="site-layout" style={{ marginLeft: 200 }}>
                     <Header />
-                    <Content style={{ margin: '24px 16px 0', overflow: 'initial', minHeight: 'calc(100vh - 188px)'}}>
+                    <Content style={{ margin: '24px 56px 0', overflow: 'initial', minHeight: 'calc(100vh - 188px)'}}>
                             <Switch>
                                 <Redirect exact from={'/'} to={'/profile'}/>
                                 <Route path='/profile/:userId?'

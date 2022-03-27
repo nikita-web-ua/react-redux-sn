@@ -2,6 +2,7 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 import {ProfileDataType} from "../../types/types";
 import {Divider} from "antd";
+import styles from './Profile.module.css'
 
 type PropsType = {
     profileData: ProfileDataType | null,
@@ -14,12 +15,12 @@ type PropsType = {
 
 const Profile: React.FC<PropsType> = (props) => {
     return (
-        <div>
+        <div className={styles.profile}>
             <ProfileInfo isOwner={props.isOwner} profileData={props.profileData}
                          status={props.status} uploadPhoto={props.uploadPhoto}
                          updateProfileStatus={props.updateProfileStatus} saveProfile={props.saveProfile}/>
             <Divider orientation={'left'}>My Posts</Divider>
-            <MyPostsContainer />
+            <MyPostsContainer/>
         </div>
     )
         ;

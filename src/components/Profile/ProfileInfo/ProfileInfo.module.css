@@ -1,8 +1,9 @@
 .descriptionBlock{
     padding: 10px;
+    display: inline-block;
 }
 .profileData {
-
+    display: inline-block;
 }
 .profileData img{
     width: 200px;
