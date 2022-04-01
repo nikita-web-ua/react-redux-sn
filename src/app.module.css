@@ -1,0 +1,11 @@
+.content {
+    min-height: calc(100vh - 134px)!important;
+    padding: 40px 60px;
+    overflow: initial;
+}
+
+.footer {
+    text-align: center;
+    background-color: #001529 !important;
+    color: white !important;
+}

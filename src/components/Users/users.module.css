@@ -3,22 +3,29 @@
 }
 
 .usersList {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    margin: 20px 0 40px 0;
+    display: grid;
+    grid-template-columns: repeat( auto-fit, minmax(155px, 1fr));
+    gap: 30px;
+    justify-items: center;
 }
 
 
 .user{
-    margin: 20px 50px;
     display: inline-block;
+}
+
+.bntPos{
+    position: relative;
+    top: -35px;
+    left: 115px;
+    margin-bottom: -40px;
+    width: 40px;
 }
 
 .searchForm{
     display: flex;
     gap: 10px;
-    margin-left: 50px;
+    margin-bottom: 40px;
 }
 
 .searchFormInput {

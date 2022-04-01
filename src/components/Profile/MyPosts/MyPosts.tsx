@@ -10,11 +10,13 @@ export type MapPropsType = {
 
 export type DispatchPropsType = {
     addPost: (newPostText: string) => void
+    updateLikesCounter: (id: number, operator: number) => void
 }
 
 const MyPosts: React.FC<MapPropsType & DispatchPropsType> = (props) => {
 
-    let postsElements = props.posts.map(post => <Post key={post.id} id={post.id} message={post.message} likesCounter={post.likesCounter}/>)
+    let postsElements = props.posts.map(post => <Post key={post.id} id={post.id} message={post.message}
+                                                      likesCounter={post.likesCounter} updateLikesCounter={props.updateLikesCounter}/>)
 
     return (
         <div className={s.postsBlock}>

@@ -1,13 +1,13 @@
-import { Comment, Tooltip, Avatar } from 'antd';
-import s from './Post.module.css'
-import {createElement, useState} from "react";
-import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
+import {Comment, Tooltip, Avatar} from 'antd';
+import {createElement, useEffect, useState} from "react";
+import {LikeOutlined, LikeFilled} from '@ant-design/icons';
 import moment from 'moment';
 
 type PropsType = {
     id: number
     message: string
     likesCounter: number
+    updateLikesCounter: (id: number, operator: number) => void
 }
 
 const Post: React.FC<PropsType> = (props) => {
@@ -15,15 +15,18 @@ const Post: React.FC<PropsType> = (props) => {
     const [likes, setLikes] = useState(props.likesCounter);
     const [action, setAction] = useState('null');
 
+    useEffect(() => {
+        setLikes(props.likesCounter)
+    }, [props.likesCounter])
+
     const like = () => {
-        if (action === 'liked'){
-            setLikes((prevLikes) => prevLikes - 1 );
+        if (action === 'liked') {
+            props.updateLikesCounter(props.id, -1)
             setAction('null');
         } else {
-            setLikes((prevLikes) => prevLikes + 1 );
+            props.updateLikesCounter(props.id, 1)
             setAction('liked');
         }
-
     };
 
     const actions = [
@@ -40,7 +43,7 @@ const Post: React.FC<PropsType> = (props) => {
         <Comment
             actions={actions}
             author={<a>Han Solo</a>}
-            avatar={<Avatar src={`https://joeschmoe.io/api/v1/${props.id}`} alt="Han Solo" />}
+            avatar={<Avatar src={`https://joeschmoe.io/api/v1/${props.id}`} alt="Han Solo"/>}
             content={
                 <p>
                     {props.message}

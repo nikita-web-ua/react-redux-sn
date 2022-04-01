@@ -6,7 +6,7 @@ import {
     getProfileStatus,
     saveProfile,
     updateProfileStatus,
-    uploadPhoto
+    uploadPhoto,
 } from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom"
 import {compose} from "redux";
@@ -45,6 +45,7 @@ class ProfileContainer extends React.Component<PropsType> {
 
     componentDidMount() {
         this.refreshProfile()
+
     }
 
     componentDidUpdate(prevProps: PropsType, prevState: PropsType) {

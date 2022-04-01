@@ -1,9 +1,10 @@
 import {Link} from "react-router-dom"
 import React from "react"
-import {Button, Col, Layout, Row} from "antd"
+import {Button, Layout} from "antd"
 import {useDispatch, useSelector} from "react-redux"
 import {logout} from "../../redux/auth-reducer"
 import {selectIsAuth, selectLogin} from "../../redux/auth-selectors"
+import {LogoutOutlined, LoginOutlined} from '@ant-design/icons'
 
 const Header: React.FC = (props) => {
 
@@ -14,17 +15,16 @@ const Header: React.FC = (props) => {
     const login = useSelector(selectLogin)
 
     const logoutCallBack = () => {
+        debugger
         dispatch(logout())
     }
 
     return (
-        <Header className="site-layout-background" style={{padding: 0}}>
-            <header>
-                <Row >
+        <Header className="site-layout-background" style={{padding: '0 15% 0 0', display: 'flex', justifyContent: 'flex-end'}}>
+            <header style={{display: 'inline-block'}}>
                     {isAuth
-                        ? <Col push={20}><Button onClick={logoutCallBack}>Log out</Button></Col>
-                        : <Col offset={20}><Button> <Link to={'/login'}>Login</Link> </Button></Col>}
-                </Row>
+                        ? <Button type="primary" onClick={logoutCallBack}>Log out <LogoutOutlined /></Button>
+                        : <Button> <Link to={'/login'}>Login <LoginOutlined /></Link> </Button>}
             </header>
         </Header>
     );

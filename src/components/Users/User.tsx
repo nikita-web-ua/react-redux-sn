@@ -9,11 +9,11 @@ import {Avatar, Button, Typography} from "antd";
 import {UserOutlined, UserAddOutlined, UserDeleteOutlined} from "@ant-design/icons";
 
 const { Text } = Typography;
-const btnPos = {
-    marginTop: '-66px',
-    marginLeft: '115px'
-}
-const gap = {margin: '5px'}
+// const btnPos = {
+//     marginTop: '-66px',
+//     marginLeft: '115px'
+// }
+const gap = {marginTop: '5px'}
 
 type UserPropsType = {
     user: UserType,
@@ -31,9 +31,8 @@ export const User: React.FC<UserPropsType> = ({user}) => {
                             <div>
                                  <Avatar shape="square" size={150} src={user.photos.small } icon={<UserOutlined />} />
                             </div>
-                            <div style={gap}><Text strong>{user.name}</Text></div>
                         </NavLink>
-                        <div style={{...gap, ...btnPos}} >
+                        <div className={styles.bntPos}>
                             {user.followed
                                 ?
                                 <Button type="primary" danger shape="circle" icon={<UserDeleteOutlined />} size={'large'} title={'unfollow'}
@@ -46,6 +45,9 @@ export const User: React.FC<UserPropsType> = ({user}) => {
                                     dispatch(follow(user.id))
                                 }}/>}
                         </div>
+                         <NavLink to={'./profile/' + user.id}>
+                              <div style={gap}><Text strong>{user.name}</Text></div>
+                         </NavLink>
                     </span>
             <span>
                 {/*<span>*/}

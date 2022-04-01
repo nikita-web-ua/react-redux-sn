@@ -10,6 +10,7 @@ const mapStateToProps = (state: AppStateType) =>{
     }
 }
 
-const MyPostsContainer = connect<MapPropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps, {addPost: actions.addPost})(MyPostMemorized)
+const MyPostsContainer = connect<MapPropsType, DispatchPropsType, {}, AppStateType>(mapStateToProps,
+    {addPost: actions.addPost, updateLikesCounter: actions.updateLikesCounter})(MyPostMemorized)
 
 export default MyPostsContainer;

@@ -5,8 +5,8 @@ import {BaseThunkType, InferActionsTypes} from "./redux-store";
 
 let initialState = {
     posts: [
-        {id: 1, message: "Hello World!", likesCounter: 321},
-        {id: 2, message: "0101101110", likesCounter: 18},
+        {id: 0, message: "Hello World!", likesCounter: 321},
+        {id: 1, message: "0101101110", likesCounter: 18},
     ] as Array<PostType>,
     profileData: null as null | ProfileDataType,
     profileStatus: '',
@@ -16,20 +16,28 @@ export const actions = {
     addPost: (postText: string) => ({type: 'profile/ADD-POST', text: postText} as const),
     setProfileData: (profileData: ProfileDataType) => ({type: 'profile/SET_PROFILE_DATA', profileData} as const),
     setProfileStatus: (status: string) => ({type: 'profile/SET_PROFILE_STATUS', status} as const),
-    savePhotoSuccess: (photos: PhotosType) => ({type: 'profile/SAVE_PHOTO_SUCCESS', photos} as const)
+    savePhotoSuccess: (photos: PhotosType) => ({type: 'profile/SAVE_PHOTO_SUCCESS', photos} as const),
+    updateLikesCounter: (id: number, operator: number) => ({type: 'profile/UPDATE_LIKES_COUNTER', id, operator} as const),
 }
 
 const profileReducer = (state = initialState, action: ActionsType): initialStateType => {
     switch (action.type) {
         case 'profile/ADD-POST': {
             let newPost = {
-                id: 3,
+                id: state.posts.length,
                 message: action.text,
                 likesCounter: 0,
             }
             return {
                 ...state,
                 posts: [...state.posts, newPost]
+            }
+        }
+        case 'profile/UPDATE_LIKES_COUNTER': {
+
+            return{
+                ...state,
+                posts: state.posts.map(el => { if (el.id === action.id){return {...el, likesCounter : el.likesCounter + action.operator}} else return el})
             }
         }
         case 'profile/SET_PROFILE_DATA': {
@@ -81,6 +89,7 @@ export const getProfileStatus = (userId: number): ThunkType => {
          console.error(error)
      }
  }
+
 
  export const uploadPhoto = (file: File): ThunkType => {
      return async  (dispatch) => {
